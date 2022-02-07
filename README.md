@@ -1,3 +1,3 @@
-# Lost Ark Serenity Bot
+# Lost Ark Bot Serenity
 
-functionalities mainly include raid event creation and handling
+Discord bot for LostArk built on Autocode + Node.js

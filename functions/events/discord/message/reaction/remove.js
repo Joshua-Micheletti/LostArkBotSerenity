@@ -11,6 +11,10 @@ module.exports = async (event, context) => {
   
   //var user = context.params.event.member.user.username;
   
+  var limit = await lib.utils.kv['@0.1.16'].get({
+    key: `itemCount`
+  });
+  
   var selectedClass = selectClass(context.params.event.emoji.name);
   
   var userID = context.params.event.user_id;
@@ -28,7 +32,7 @@ module.exports = async (event, context) => {
       }
     ],
     limit: {
-      'count': 0,
+      'count': limit,
       'offset': 0
     }
   });
@@ -59,7 +63,6 @@ module.exports = async (event, context) => {
         }
       ]
     });
-    
   }
   
   else if (row.rows[0].fields.userID1 == userID && row.rows[0].fields.class1 == selectedClass) {
@@ -192,7 +195,7 @@ module.exports = async (event, context) => {
       }
     ],
     limit: {
-      'count': 0,
+      'count': limit,
       'offset': 0
     }
   });
@@ -296,7 +299,6 @@ module.exports = async (event, context) => {
   
   fields = fields.concat(members);
      
-  
   await lib.discord.channels['@0.3.0'].messages.update({
     "message_id": row.rows[0].fields.messageID, // required
     "channel_id": row.rows[0].fields.channelID, // required

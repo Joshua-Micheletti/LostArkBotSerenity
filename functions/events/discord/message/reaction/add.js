@@ -3,6 +3,10 @@ const lib = require('lib')({token: process.env.STDLIB_SECRET_TOKEN});
 const range = 'A:AF';
 
 module.exports = async (event, context) => {
+  var limit = await lib.utils.kv['@0.1.16'].get({
+    key: `itemCount`
+  });
+  
   // variable to store the username
   var user = context.params.event.member.user.username;
   // variable to store the selected class to display
@@ -18,7 +22,7 @@ module.exports = async (event, context) => {
       },
     ],
     limit: {
-      count: 0,
+      count: limit,
       offset: 0,
     },
   });
@@ -229,7 +233,7 @@ module.exports = async (event, context) => {
         },
       ],
       limit: {
-        count: 0,
+        count: limit,
         offset: 0,
       },
     });
