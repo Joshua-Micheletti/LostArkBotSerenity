@@ -1,0 +1,8 @@
+{
+  "name": "lostarkinfo",
+  "author": "Jacob Lee",
+  "publish": false,
+  "dependencies": {
+    "lib": "latest"
+  }
+}

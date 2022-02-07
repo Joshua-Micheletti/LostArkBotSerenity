@@ -1,0 +1,41 @@
+{
+  "name": "solidgallium/lostarkinfo",
+  "timeout": 30000,
+  "connector": false,
+  "events": {
+    "functions/events/discord/bot_mention.js": {
+      "name": "discord.bot_mention"
+    },
+    "functions/events/discord/command.js": {
+      "name": "discord.command",
+      "subtype": {
+        "command": "member-count"
+      }
+    },
+    "functions/events/autocode/self/deployed.js": {
+      "name": "autocode.self.deployed"
+    },
+    "functions/events/discord/message/reaction/remove.js": {
+      "name": "discord.message.reaction.remove"
+    },
+    "functions/events/discord/message/reaction/add.js": {
+      "name": "discord.message.reaction.add"
+    },
+    "functions/events/discord/message/help.js": {
+      "name": "discord.message.create"
+    },
+    "functions/events/scheduler/daily.js": {
+      "name": "scheduler.daily",
+      "subtype": {
+        "time": "00:00 (12:00am)",
+        "timezone": "Europe — Rome, IT (+01:00, +02:00 DST)"
+      }
+    },
+    "functions/events/discord/message/set-channel.js": {
+      "name": "discord.message.create"
+    },
+    "functions/events/discord/message/create-event.js": {
+      "name": "discord.message.create"
+    }
+  }
+}
