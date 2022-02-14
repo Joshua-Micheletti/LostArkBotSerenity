@@ -46,8 +46,6 @@ module.exports = async (event, context) => {
   
   var eventTime = "<t:" + timeInEpoch + ":R>";
   
-  console.log(row.rows[0]);
-  
   if (row.rows[0].fields.userID0 == userID && row.rows[0].fields.class0 == selectedClass) {
     await lib.googlesheets.query['@0.3.0'].replace({
       range: range,
@@ -184,8 +182,11 @@ module.exports = async (event, context) => {
     }); 
   }
   
+  else {
+    return;
+  }
   
-  
+
   var row = await lib.googlesheets.query['@0.3.0'].select({
     range: range,
     bounds: 'FULL_RANGE',
@@ -314,7 +315,6 @@ module.exports = async (event, context) => {
       }
     ]
   });
-  
 };
 
 function selectClass(emoji)  {

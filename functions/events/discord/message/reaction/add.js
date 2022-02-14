@@ -27,6 +27,8 @@ module.exports = async (event, context) => {
     },
   });
   
+  // part of a longer implementation, needs checking
+  /*
   var dateNumbers = row.rows[0].fields.eventDate.split('.');
   var hourNumbers = row.rows[0].fields.eventHour.split(':');
   
@@ -35,6 +37,7 @@ module.exports = async (event, context) => {
   timeInEpoch = Math.floor(timeInEpoch / 1000);
   
   var eventTime = "<t:" + timeInEpoch + ":R>";
+  */
 
   console.log(row.rows[0]);
 
@@ -66,6 +69,8 @@ module.exports = async (event, context) => {
   if (row.rows[0].fields.member7) {
     availableSpots--;
   }
+
+  var firstAvailableSpot;
 
   // check if the user is already registered
   if (
@@ -222,7 +227,34 @@ module.exports = async (event, context) => {
         ],
       });
     }
-
+    // if there's no available spot, end the request here
+    else {
+      return;
+    }
+    
+    // short implementation of message update
+    // request the data from the original message
+    var message = await lib.discord.channels['@0.3.0'].messages.retrieve({
+      message_id: row.rows[0].fields.messageID, // required
+      channel_id: row.rows[0].fields.channelID // required
+    });
+    // update the available spots message
+    message.embeds[0].fields[3].value = "Available Spots: " + (availableSpots - 1);
+    // add the new member to the list
+    message.embeds[0].fields.push({
+      name: user,
+      value: selectedClass,
+      inline: true,
+    });
+    // update the message with the edited info
+    await lib.discord.channels['@0.3.0'].messages.update({
+      message_id: row.rows[0].fields.messageID, // required
+      channel_id: row.rows[0].fields.channelID, // required
+      embeds: message.embeds
+    });
+    
+    // longer implementation, keeps coherence between database and message
+    /*
     // update the row variable with the new data from the database
     var row = await lib.googlesheets.query['@0.3.0'].select({
       range: range,
@@ -366,6 +398,8 @@ module.exports = async (event, context) => {
         },
       ],
     });
+    */
+    
   }
 };
 
